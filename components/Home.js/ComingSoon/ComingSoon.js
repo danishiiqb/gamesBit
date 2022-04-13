@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 const { width, height } = Dimensions.get('window');
 import ItemSoon from './ItemSoon';
 import Heading from './Heading';
+import ButtonComp from './ButtonComp';
 
 const ComingSoon = ({ months: { startingMonth, endingMonth } }) => {
   const [data, setData] = useState([]);
@@ -30,7 +31,9 @@ const ComingSoon = ({ months: { startingMonth, endingMonth } }) => {
       start={[0, 0.2]}
       end={[1, 0.56]}
       style={{
-        height: 330,
+        height: 390,
+        marginTop: 33,
+        marginBottom: 44,
       }}
       colors={['#71004A', '#220038']}
     >
@@ -46,28 +49,32 @@ const ComingSoon = ({ months: { startingMonth, endingMonth } }) => {
         <Heading></Heading>
         <View
           style={{
-            height: '68%',
+            height: '60%',
             width: '100%',
             flexDirection: 'row',
           }}
         >
-          <ItemSoon expanded item={data[0]}></ItemSoon>
-          <View
-            style={{
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              width: '60%',
-            }}
-          >
-            {data.length > 0 &&
-              data.map((item, idx) => {
-                if (idx === 0) {
-                  return;
-                }
-                return <ItemSoon idx={idx} item={item} />;
-              })}
-          </View>
+          {data.length > 0 && (
+            <>
+              <ItemSoon expanded item={data[0]}></ItemSoon>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                  width: '60%',
+                }}
+              >
+                {data.map((item, idx) => {
+                  if (idx === 0) {
+                    return;
+                  }
+                  return <ItemSoon idx={idx} item={item} />;
+                })}
+              </View>
+            </>
+          )}
         </View>
+        <ButtonComp></ButtonComp>
       </View>
     </LinearGradient>
   );
