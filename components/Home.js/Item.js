@@ -1,17 +1,33 @@
 import { View, Text, ImageBackground } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Pressable } from 'react-native';
 
 const Item = ({ item, index }) => {
   return (
-    <>
+    <Pressable
+      style={({ pressed }) =>
+        pressed
+          ? {
+              shadowOpacity: 1,
+              shadowColor: '#13001F',
+              shadowOffset: { width: 0, height: 0 },
+              shadowRadius: 8,
+              elevation: 6,
+            }
+          : {
+              shadowOpacity: 0.6,
+              shadowColor: 'black',
+              shadowOffset: { width: 0, height: 0 },
+              shadowRadius: 5,
+              elevation: 6,
+            }
+      }
+    >
       <View
         style={{
-          height: 280,
-          shadowOpacity: 0.6,
-          shadowColor: 'black',
-          shadowOffset: { width: 0, height: 0 },
-          shadowRadius: 5,
+          height: 295,
+
           marginRight: 15,
           width: 350,
         }}
@@ -49,7 +65,7 @@ const Item = ({ item, index }) => {
                 >
                   {item.name}
                 </Text>
-                <View style={{ flexDirection: 'row', marginTop: 3.5 }}>
+                <View style={{ flexDirection: 'row', marginTop: 3 }}>
                   {item.genres.slice(0, 3).map((el, idx) => {
                     return (
                       <View
@@ -67,7 +83,6 @@ const Item = ({ item, index }) => {
                         <Text
                           style={{
                             fontSize: 8,
-
                             color: 'white',
                             fontFamily: 'font-semibold',
                           }}
@@ -83,7 +98,7 @@ const Item = ({ item, index }) => {
           </ImageBackground>
         </View>
       </View>
-    </>
+    </Pressable>
   );
 };
 
