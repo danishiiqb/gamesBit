@@ -1,78 +1,97 @@
 import { View, Text, Image } from 'react-native';
 import React from 'react';
+import { Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { SharedElement } from 'react-native-shared-element';
 
 const ListItem = ({ item }) => {
+  const navigation = useNavigation();
   return (
-    <View
-      style={{
-        shadowOpacity: 0.6,
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 0 },
-        shadowRadius: 5,
-        elevation: 6,
-        width: 145,
-        height: '100%',
-        marginRight: 13,
+    <Pressable
+      onPress={() => {
+        navigation.push('Detail', item);
       }}
     >
       <View
         style={{
-          width: '100%',
+          shadowOpacity: 0.6,
+          shadowColor: 'black',
+          shadowOffset: { width: 0, height: 0 },
+          shadowRadius: 5,
+          elevation: 6,
+          width: 145,
           height: '100%',
-          borderRadius: 5,
+          marginRight: 13,
         }}
       >
-        <Image
-          style={{
-            width: '100%',
-            height: '78%',
-            borderRadius: 5,
-            backgroundColor: 'red',
-            resizeMode: 'cover',
-          }}
-          source={{ uri: item.background_image }}
-        ></Image>
         <View
           style={{
-            marginTop: 6,
-            flex: 1,
+            width: '100%',
+            height: '100%',
+            borderRadius: 5,
           }}
         >
-          <Text
+          <SharedElement
             style={{
-              color: 'white',
-              fontFamily: 'font-semibold',
-              lineHeight: 20,
-              fontSize: 10.3,
+              width: '100%',
+              height: '78%',
+            }}
+            id={item.id}
+          >
+            <Image
+              style={{
+                width: '100%',
+                height: '100%',
+                borderRadius: 5,
+                backgroundColor: '#2a0045',
+                resizeMode: 'cover',
+              }}
+              source={{ uri: item.background_image }}
+            ></Image>
+          </SharedElement>
+
+          <View
+            style={{
+              marginTop: 6,
+              flex: 1,
             }}
           >
-            {item.name.slice(0, 27)}
-          </Text>
-          <View style={{ flexDirection: 'row', marginTop: 1 }}>
-            {item.genres.slice(0, 3).map((el, idx) => {
-              return (
-                <View
-                  key={idx}
-                  style={{
-                    marginRight: 5,
-                  }}
-                >
-                  <Text
+            <Text
+              style={{
+                color: 'white',
+                fontFamily: 'font-semibold',
+                lineHeight: 20,
+                fontSize: 11,
+              }}
+            >
+              {item.name.slice(0, 27)}
+            </Text>
+            <View style={{ flexDirection: 'row', marginTop: 1 }}>
+              {item.genres.slice(0, 2).map((el, idx) => {
+                return (
+                  <View
+                    key={idx}
                     style={{
-                      fontSize: 7,
-                      color: '#bfbfbf',
-                      fontFamily: 'font-semibold',
+                      marginRight: 5,
                     }}
                   >
-                    {el.name}
-                  </Text>
-                </View>
-              );
-            })}
+                    <Text
+                      style={{
+                        fontSize: 7.7,
+                        color: '#bfbfbf',
+                        fontFamily: 'font-semibold',
+                      }}
+                    >
+                      {el.name}
+                    </Text>
+                  </View>
+                );
+              })}
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
