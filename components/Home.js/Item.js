@@ -2,10 +2,15 @@ import { View, Text, ImageBackground } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Item = ({ item, index }) => {
+  const navigation = useNavigation();
   return (
     <Pressable
+      onPress={() => {
+        navigation.push('Detail', item);
+      }}
       style={({ pressed }) =>
         pressed
           ? {
@@ -27,7 +32,6 @@ const Item = ({ item, index }) => {
       <View
         style={{
           height: 295,
-
           marginRight: 15,
           width: 350,
         }}
@@ -38,6 +42,7 @@ const Item = ({ item, index }) => {
               width: '100%',
               justifyContent: 'flex-end',
               height: '100%',
+              backgroundColor: '#2a0045',
             }}
             resizeMode='cover'
             source={{ uri: `${item.background_image}` }}
