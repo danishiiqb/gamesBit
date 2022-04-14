@@ -8,7 +8,7 @@ const Heading = () => {
       <Logo
         style={{
           position: 'relative',
-          top: 1.4,
+          top: -5,
           width: 53,
           height: 11,
         }}
