@@ -3,8 +3,9 @@ import React from 'react';
 import { Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SharedElement } from 'react-native-shared-element';
+import { Dimensions } from 'react-native';
 
-const ListItem = ({ item }) => {
+const ListItem = ({ idx, all, item }) => {
   const navigation = useNavigation();
   return (
     <Pressable
@@ -19,9 +20,9 @@ const ListItem = ({ item }) => {
           shadowOffset: { width: 0, height: 0 },
           shadowRadius: 5,
           elevation: 6,
-          width: 145,
+          width: all ? '100%' : 145,
           height: '100%',
-          marginRight: 13,
+          marginRight: all ? 0 : 13,
         }}
       >
         <View
