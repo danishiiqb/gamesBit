@@ -15,12 +15,14 @@ const List = ({
   months: { startingMonth, endingMonth },
 }) => {
   const [data, setData] = useState([]);
-
+  const itemRender = ({ item }) => {
+    return <ListItem item={item} />;
+  };
   useEffect(() => {
     async function getData() {
       let gamesData = await (
         await fetch(
-          `https://api.rawg.io/api/games?key=b4b44fe4937c40fe97bf7de6fb2d4c96&page=1&${
+          `https://api.rawg.io/api/games?key=b4b44fe4937c40fe97bf7de6fb2d4c96&page=1&&page_size=9&${
             startingMonth &&
             endingMonth &&
             `dates=${startingMonth},${endingMonth}&`
@@ -30,6 +32,7 @@ const List = ({
         )
       ).json();
       let limitedData = gamesData.results;
+
       setData([...limitedData]);
     }
     getData();
@@ -37,7 +40,13 @@ const List = ({
 
   return (
     <View style={{ marginTop: index === 1 ? 0 : 10 }}>
-      <Title text={text}></Title>
+      <Title
+        startingMonth={startingMonth}
+        endingMonth={endingMonth}
+        rating={rating}
+        consoleGame={consoleGame}
+        text={text}
+      ></Title>
       <View
         style={{
           height: 285,
@@ -46,6 +55,10 @@ const List = ({
         <View>
           <FlatList
             horizontal
+            initialNumToRender={4}
+            bounces={false}
+            updateCellsBatchingPeriod={700}
+            maxToRenderPerBatch={3}
             decelerationRate='fast'
             snapToInterval={145 + 13}
             contentContainerStyle={{
@@ -58,9 +71,7 @@ const List = ({
             keyExtractor={(item) => {
               return item.id;
             }}
-            renderItem={({ item }) => {
-              return <ListItem item={item} />;
-            }}
+            renderItem={itemRender}
           ></FlatList>
         </View>
       </View>
