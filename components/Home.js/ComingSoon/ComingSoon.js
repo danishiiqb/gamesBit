@@ -68,13 +68,19 @@ const ComingSoon = ({ months: { startingMonth, endingMonth } }) => {
                   if (idx === 0) {
                     return;
                   }
-                  return <ItemSoon idx={idx} item={item} />;
+                  return <ItemSoon key={idx} idx={idx} item={item} />;
                 })}
               </View>
             </>
           )}
         </View>
-        <ButtonComp></ButtonComp>
+        <ButtonComp
+          text='Coming Soon'
+          rating={false}
+          consoleGame={false}
+          startingMonth={startingMonth}
+          endingMonth={endingMonth}
+        ></ButtonComp>
       </View>
     </LinearGradient>
   );

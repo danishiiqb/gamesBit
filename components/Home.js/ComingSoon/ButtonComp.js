@@ -2,10 +2,27 @@ import { View, Text } from 'react-native';
 import React from 'react';
 import { Pressable } from 'react-native';
 import { BlurView } from 'expo-blur';
+import { useNavigation } from '@react-navigation/native';
 
-const ButtonComp = () => {
+const ButtonComp = ({
+  text,
+  rating,
+  consoleGame,
+  startingMonth,
+  endingMonth,
+}) => {
+  const navigation = useNavigation();
   return (
     <Pressable
+      onPress={() => {
+        navigation.push('ShowAll', {
+          rating,
+          consoleGame,
+          startingMonth,
+          endingMonth,
+          heading: text,
+        });
+      }}
       style={({ pressed }) =>
         pressed
           ? {
@@ -35,9 +52,10 @@ const ButtonComp = () => {
           tint='light'
           style={{
             padding: 8,
+
             borderRadius: 56,
             overflow: 'hidden',
-            width: '40%',
+            width: '36%',
           }}
         >
           <Text
