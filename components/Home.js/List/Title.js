@@ -1,7 +1,10 @@
 import { View, Text } from 'react-native';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { Pressable } from 'react-native';
 
-const Title = ({ text }) => {
+const Title = ({ text, rating, consoleGame, startingMonth, endingMonth }) => {
+  const navigation = useNavigation();
   return (
     <View
       style={{
@@ -23,7 +26,17 @@ const Title = ({ text }) => {
         {text}
       </Text>
 
-      <View>
+      <Pressable
+        onPress={() => {
+          navigation.push('ShowAll', {
+            rating,
+            consoleGame,
+            startingMonth,
+            endingMonth,
+            heading: text,
+          });
+        }}
+      >
         <Text
           style={{
             color: '#bfbfbf',
@@ -33,7 +46,7 @@ const Title = ({ text }) => {
         >
           Show All
         </Text>
-      </View>
+      </Pressable>
     </View>
   );
 };
