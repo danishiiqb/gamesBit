@@ -9,8 +9,9 @@ import { Pressable } from 'react-native';
 enableScreens();
 import { useRef } from 'react';
 
-function SplashScreen({ navigation }) {
+function SplashScreen({ route, navigation }) {
   const translation = useRef(new Animated.Value(0)).current;
+
   return (
     <>
       <ImageBackground
@@ -47,7 +48,7 @@ function SplashScreen({ navigation }) {
             easing: Easing.bounce,
             useNativeDriver: true,
           }).start(() => {
-            navigation.replace('Home');
+            navigation.navigate('Stack');
           });
         }}
         style={({ pressed }) =>
