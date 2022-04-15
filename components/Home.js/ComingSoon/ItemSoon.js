@@ -2,7 +2,7 @@ import { View, Text, Image } from 'react-native';
 import React from 'react';
 import { BlurView } from 'expo-blur';
 
-const ItemSoon = ({ expanded, item, idx }) => {
+const ItemSoon = ({ expanded, item, idx, detail }) => {
   return (
     <View
       style={[
@@ -17,52 +17,59 @@ const ItemSoon = ({ expanded, item, idx }) => {
         expanded
           ? {
               paddingRight: 6,
-              width: '40%',
+              width: detail ? '50%' : '40%',
               height: '100%',
             }
           : {
-              width: '50%',
-              height: '50%',
-              paddingLeft: idx % 2 === 0 ? 6 : 0,
-              paddingBottom: idx === 1 || idx == 2 ? 6 : 0,
+              width: detail ? '100%' : '50%',
+              height: detail ? '100%' : '50%',
+              paddingLeft: detail ? 0 : idx % 2 === 0 ? 6 : 0,
+              paddingBottom: detail
+                ? idx == 1 && 6
+                : idx === 1 || idx == 2
+                ? 6
+                : 0,
             },
       ]}
     >
-      <BlurView
-        intensity={89}
-        tint='dark'
-        style={{
-          zIndex: 3,
-          bottom: idx === 1 || idx == 2 ? 6 : 0,
-          left: idx % 2 === 0 ? 6 : 0,
-          borderRadius: 5,
-          padding: 2.5,
-          overflow: 'hidden',
-          width: '100%',
-          position: 'absolute',
-        }}
-      >
-        <Text
+      {!detail && (
+        <BlurView
+          intensity={89}
+          tint='dark'
           style={{
-            color: 'white',
-            textAlign: 'center',
-            fontFamily: 'font-semibold',
-            lineHeight: 16,
-            fontSize: 8.89,
+            zIndex: 3,
+            bottom: idx === 1 || idx == 2 ? 6 : 0,
+            left: idx % 2 === 0 ? 6 : 0,
+            borderRadius: 5,
+            padding: 2.5,
+            overflow: 'hidden',
+            width: '100%',
+            position: 'absolute',
           }}
         >
-          {item.name}
-        </Text>
-      </BlurView>
+          <Text
+            style={{
+              color: 'white',
+              textAlign: 'center',
+              fontFamily: 'font-semibold',
+              lineHeight: 16,
+              fontSize: 8.89,
+            }}
+          >
+            {item.name}
+          </Text>
+        </BlurView>
+      )}
+
       <Image
         style={{
           width: '100%',
           borderRadius: 5,
           height: '100%',
           resizeMode: 'cover',
-          backgroundColor: 'red',
+          backgroundColor: '#2a0045',
         }}
-        source={{ uri: `${item.background_image}` }}
+        source={{ uri: detail ? item?.image : `${item.background_image}` }}
       ></Image>
     </View>
   );
