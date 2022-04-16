@@ -1,8 +1,10 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 import { Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-const Button = ({ text, route, type, vals }) => {
+const Button = ({ text, route = null, type, formSubmission }) => {
+  const navigation = useNavigation();
   return (
     <Pressable
       style={({ pressed }) =>
@@ -22,11 +24,17 @@ const Button = ({ text, route, type, vals }) => {
               elevation: 6,
             }
       }
-      onPress={() => {}}
+      onPress={() => {
+        if (type === 'submit') {
+          formSubmission();
+          return;
+        }
+        navigation.navigate(route);
+      }}
     >
       <View
         style={{
-          backgroundColor: type === 'login' ? '#49007a' : 'white',
+          backgroundColor: type === 'submit' ? '#49007a' : 'white',
           padding: 10,
           borderRadius: 4,
         }}
@@ -35,7 +43,7 @@ const Button = ({ text, route, type, vals }) => {
           style={{
             textAlign: 'center',
             fontFamily: 'font-semibold',
-            color: type === 'login' ? 'white' : 'black',
+            color: type === 'submit' ? 'white' : 'black',
             fontSize: 18,
           }}
         >
