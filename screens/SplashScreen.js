@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { enableScreens } from 'react-native-screens';
 import Logo from '../components/Logo';
 import { Pressable } from 'react-native';
-
 enableScreens();
 import { useRef } from 'react';
 
@@ -48,7 +47,7 @@ function SplashScreen({ route, navigation }) {
             easing: Easing.bounce,
             useNativeDriver: true,
           }).start(() => {
-            navigation.navigate('Stack');
+            navigation.navigate('Home');
           });
         }}
         style={({ pressed }) =>
