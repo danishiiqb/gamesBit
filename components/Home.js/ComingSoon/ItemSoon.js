@@ -1,10 +1,12 @@
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import React from 'react';
 import { BlurView } from 'expo-blur';
+import { useNavigation } from '@react-navigation/native';
 
 const ItemSoon = ({ expanded, item, idx, detail }) => {
+  const navigation = useNavigation();
   return (
-    <View
+    <Pressable
       style={[
         {
           shadowOpacity: 0.6,
@@ -31,47 +33,55 @@ const ItemSoon = ({ expanded, item, idx, detail }) => {
                 : 0,
             },
       ]}
+      onPress={() => {
+        navigation.push('Detail', item);
+      }}
     >
-      {!detail && (
-        <BlurView
-          intensity={89}
-          tint='dark'
-          style={{
-            zIndex: 3,
-            bottom: idx === 1 || idx == 2 ? 6 : 0,
-            left: idx % 2 === 0 ? 6 : 0,
-            borderRadius: 5,
-            padding: 2.5,
-            overflow: 'hidden',
-            width: '100%',
-            position: 'absolute',
-          }}
-        >
-          <Text
+      <View
+        style={{
+          position: 'relative',
+        }}
+      >
+        {!detail && (
+          <BlurView
+            intensity={89}
+            tint='dark'
             style={{
-              color: 'white',
-              textAlign: 'center',
-              fontFamily: 'font-semibold',
-              lineHeight: 16,
-              fontSize: 8.89,
+              zIndex: 3,
+              bottom: 0,
+              borderRadius: 5,
+              padding: 2.5,
+              overflow: 'hidden',
+              width: '100%',
+              position: 'absolute',
             }}
           >
-            {item.name}
-          </Text>
-        </BlurView>
-      )}
+            <Text
+              style={{
+                color: 'white',
+                textAlign: 'center',
+                fontFamily: 'font-semibold',
+                lineHeight: 16,
+                fontSize: 8.89,
+              }}
+            >
+              {item.name}
+            </Text>
+          </BlurView>
+        )}
 
-      <Image
-        style={{
-          width: '100%',
-          borderRadius: 5,
-          height: '100%',
-          resizeMode: 'cover',
-          backgroundColor: '#2a0045',
-        }}
-        source={{ uri: detail ? item?.image : `${item.background_image}` }}
-      ></Image>
-    </View>
+        <Image
+          style={{
+            width: '100%',
+            borderRadius: 5,
+            height: '100%',
+            resizeMode: 'cover',
+            backgroundColor: '#2a0045',
+          }}
+          source={{ uri: detail ? item?.image : `${item.background_image}` }}
+        ></Image>
+      </View>
+    </Pressable>
   );
 };
 
