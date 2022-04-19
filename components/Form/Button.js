@@ -3,10 +3,13 @@ import React from 'react';
 import { Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const Button = ({ text, route = null, type, formSubmission }) => {
+import Spinner from '../Spinner';
+
+const Button = ({ load = false, text, route = null, type, formSubmission }) => {
   const navigation = useNavigation();
   return (
     <Pressable
+      disabled={load}
       style={({ pressed }) =>
         pressed
           ? {
@@ -34,11 +37,16 @@ const Button = ({ text, route = null, type, formSubmission }) => {
     >
       <View
         style={{
-          backgroundColor: type === 'submit' ? '#49007a' : 'white',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor:
+            type === 'submit' ? (load ? '#6b00b3' : '#49007a') : 'white',
           padding: 10,
           borderRadius: 4,
         }}
       >
+        {load ? <Spinner size={14} load={load}></Spinner> : null}
         <Text
           style={{
             textAlign: 'center',

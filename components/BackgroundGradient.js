@@ -3,7 +3,7 @@ import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ImageBackground } from 'react-native';
 
-const BackgroundGradient = ({ image, height }) => {
+const BackgroundGradient = ({ radius = 40, image, height }) => {
   return (
     <View
       style={{
@@ -26,7 +26,7 @@ const BackgroundGradient = ({ image, height }) => {
         colors={['transparent', 'rgba(26,0,43,1)']}
       ></LinearGradient>
       <ImageBackground
-        blurRadius={40}
+        blurRadius={radius}
         style={{
           top: 0,
           left: 0,

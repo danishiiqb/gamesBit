@@ -4,18 +4,21 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const BackBtn = () => {
+const BackBtn = ({ style }) => {
   const navigation = useNavigation();
   return (
     <Pressable
       onPress={() => {
         navigation.goBack();
       }}
-      style={{
-        position: 'absolute',
-        top: 46,
-        left: 16,
-      }}
+      style={[
+        {
+          position: 'absolute',
+          top: 46,
+          left: 16,
+        },
+        style,
+      ]}
     >
       <Icon name='left' size={18} color='white'></Icon>
     </Pressable>

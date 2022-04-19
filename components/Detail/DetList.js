@@ -2,14 +2,17 @@ import { View, Text } from 'react-native';
 import React from 'react';
 import GenericText from './GenericText';
 
-const DetList = ({ items }) => {
+const DetList = ({ items, publisher }) => {
   return (
     <View
       style={{
         flexDirection: 'column',
       }}
     >
-      <GenericText text='Platforms'></GenericText>
+      <GenericText
+        expand={publisher ? true : false}
+        text={publisher ? 'Publishers' : 'Platforms'}
+      ></GenericText>
       <View
         style={{
           flexDirection: 'row',
@@ -29,13 +32,13 @@ const DetList = ({ items }) => {
             >
               <Text
                 style={{
-                  fontSize: 10,
+                  fontSize: publisher ? 12 : 10,
                   color: '#dedede',
                   marginTop: 4,
                   fontFamily: 'font-semibold',
                 }}
               >
-                {el.platform.name}
+                {publisher ? el.name : el.platform.name}
               </Text>
             </View>
           );

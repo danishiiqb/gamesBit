@@ -9,7 +9,7 @@ const Description = ({ desc }) => {
   return (
     <View
       style={{
-        marginTop: 35,
+        marginTop: 38,
       }}
     >
       <GenericText expand text={'Description'}></GenericText>

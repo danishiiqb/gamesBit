@@ -146,7 +146,7 @@ const Detail = ({ route, navigation }) => {
             }}
           >
             <DetList items={item.platforms}></DetList>
-            <MetaSection items={item.metacritic}></MetaSection>
+            <MetaSection items={item.metacritic || 45}></MetaSection>
           </View>
           <Info data={data} item={item}></Info>
         </View>

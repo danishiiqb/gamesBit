@@ -5,7 +5,7 @@ import { Animated } from 'react-native';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 
-const Spinner = ({ load, size }) => {
+const Spinner = ({ load, size, style }) => {
   const rotate = useRef(new Animated.Value(0)).current;
   function anim() {
     Animated.spring(rotate, {
@@ -20,7 +20,6 @@ const Spinner = ({ load, size }) => {
   }
   useEffect(() => {
     if (load) {
-      console.log('uoii');
       anim();
     }
     if (!load) {
@@ -29,12 +28,15 @@ const Spinner = ({ load, size }) => {
   }, [load]);
   return (
     <Animated.View
-      style={{
-        marginRight: 8,
-        position: 'relative',
-        top: -1.2,
-        transform: [{ rotate: rotate }],
-      }}
+      style={[
+        {
+          marginRight: 8,
+          position: 'relative',
+          top: -1.2,
+          transform: [{ rotate: rotate }],
+        },
+        style,
+      ]}
     >
       <Icons size={size} color='white' name='spinner'></Icons>
     </Animated.View>
