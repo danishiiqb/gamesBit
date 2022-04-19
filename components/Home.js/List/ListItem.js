@@ -47,7 +47,11 @@ const ListItem = ({ idx, all, item }) => {
                 backgroundColor: '#2a0045',
                 resizeMode: 'cover',
               }}
-              source={{ uri: item.background_image }}
+              source={{
+                uri:
+                  item.background_image ||
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDWHK7d1GnyAFK9mQgc6jOEmT8e3cmMfgLA_MZu2OPJK6Q_tNyvG4Z3xh6jZIVzXDAOZ0&usqp=CAU',
+              }}
             ></Image>
           </SharedElement>
 
