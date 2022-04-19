@@ -2,8 +2,9 @@ import { View, Text } from 'react-native';
 import React from 'react';
 import { FlatList } from 'react-native';
 import ProfileList from './ProfileList';
+import Empty from '../Empty';
 
-const ListWrapper = ({ coll, txt }) => {
+const ListWrapper = ({ coll, txt, user }) => {
   return (
     <View
       style={{
@@ -63,18 +64,33 @@ const ListWrapper = ({ coll, txt }) => {
           </View>
         </View>
       </View>
-      <FlatList
-        contentContainerStyle={{}}
-        maxToRenderPerBatch={7}
-        initialNumToRender={6}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(item, idx) => item.id}
-        renderItem={({ item }) => {
-          return <ProfileList item={item} />;
-        }}
-        data={coll}
-      ></FlatList>
+      {coll.length === 0 ? (
+        <Empty
+          user={user}
+          style={{
+            top: '50%',
+            padding: 0,
+            transform: [
+              {
+                translateY: '-50%',
+              },
+            ],
+          }}
+        ></Empty>
+      ) : (
+        <FlatList
+          contentContainerStyle={{}}
+          maxToRenderPerBatch={7}
+          initialNumToRender={6}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item, idx) => item.id}
+          renderItem={({ item }) => {
+            return <ProfileList item={item} />;
+          }}
+          data={coll}
+        ></FlatList>
+      )}
     </View>
   );
 };

@@ -6,12 +6,13 @@ import ListItem from '../components/Home.js/List/ListItem';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { SafeAreaView } from 'react-native';
 import BackgroundGradient from '../components/BackgroundGradient';
+import Spinner from '../components/Spinner';
 const { width, height } = Dimensions.get('window');
 
 const ShowAll = ({ route, navigation }) => {
   const [data, setData] = useState([]);
   const [pageIndex, setPageIndex] = useState(1);
-  const max = useRef(1000);
+  const max = useRef(0);
   const {
     params: { rating, consoleGame, heading, startingMonth, endingMonth },
   } = route;
@@ -27,7 +28,7 @@ const ShowAll = ({ route, navigation }) => {
       </View>
     );
   }
-  console.log(pageIndex);
+
   useEffect(() => {
     async function getData() {
       let gamesData = await (
@@ -42,15 +43,23 @@ const ShowAll = ({ route, navigation }) => {
         )
       ).json();
       let allData = gamesData.results;
-      console.log(allData.length, gamesData.count);
-      //   let totalCount = gamesData.count / allData.length;
 
+      let totalCount = allData?.length && gamesData.count / allData.length;
+      if (totalCount > 20) {
+        max.current = 20;
+      } else {
+        max.current = totalCount;
+      }
+      if (!allData) {
+        return;
+      }
       setData((prev) => {
         return [...prev, ...allData];
       });
     }
     getData();
   }, [pageIndex]);
+
   return (
     <SafeAreaView
       style={{
@@ -112,17 +121,19 @@ const ShowAll = ({ route, navigation }) => {
                 if (
                   nativeEvent.layoutMeasurement.height +
                     nativeEvent.contentOffset.y >=
-                  nativeEvent.contentSize.height - 290
+                  nativeEvent.contentSize.height - 600
                 ) {
-                  setPageIndex((prev) => {
-                    return prev + 1;
-                  });
+                  if (pageIndex < max.current) {
+                    setPageIndex((prev) => {
+                      return prev + 1;
+                    });
+                  }
                 }
               }}
-              scrollEventThrottle={400}
+              scrollEventThrottle={250}
               initialNumToRender={9}
               bounces={false}
-              updateCellsBatchingPeriod={700}
+              updateCellsBatchingPeriod={500}
               columnWrapperStyle={{
                 width: width - 13 * 2,
                 justifyContent: 'space-between',
@@ -130,7 +141,7 @@ const ShowAll = ({ route, navigation }) => {
               }}
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
-              maxToRenderPerBatch={6}
+              maxToRenderPerBatch={8}
               contentContainerStyle={{
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -146,7 +157,15 @@ const ShowAll = ({ route, navigation }) => {
           </View>
         </>
       ) : (
-        <Text>Loading</Text>
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Spinner load={!data.length} size={45}></Spinner>
+        </View>
       )}
     </SafeAreaView>
   );

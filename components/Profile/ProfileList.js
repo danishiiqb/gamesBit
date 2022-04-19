@@ -1,10 +1,10 @@
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Pressable } from 'react-native';
 import React from 'react';
 import Rating from '../Detail/Rating';
 
 const ProfileList = ({ item }) => {
   return (
-    <View
+    <Pressable
       style={{
         backgroundColor: '#360059',
         padding: 12,
@@ -27,8 +27,10 @@ const ProfileList = ({ item }) => {
           height: 56,
           marginRight: 12,
           borderRadius: 5,
+          backgroundColor: '#1A002B',
         }}
       ></Image>
+
       <View
         style={{
           flex: 1,
@@ -83,7 +85,7 @@ const ProfileList = ({ item }) => {
         </View>
         <Rating rating={item.rating}></Rating>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
