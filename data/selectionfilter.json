@@ -1,0 +1,65 @@
+[
+  {
+    "heading": "Platforms",
+    "fhead": "platforms",
+    "options": [
+      "Xbox One",
+      "Xbox Series S/X",
+      "Xbox 360",
+      "PlayStation 3",
+      "PlayStation 4",
+      "PlayStation 5",
+      "PC"
+    ]
+  },
+  {
+    "heading": "Genres",
+    "fhead": "genres",
+    "options": [
+      "Action",
+      "Adventure",
+      "Strategy",
+      "RPG",
+      "Shooter",
+      "Adventure",
+      "Puzzle",
+      "Racing",
+      "Sports"
+    ]
+  },
+  {
+    "heading": "No of Players",
+    "fhead": "tags",
+    "options": [
+      "Singleplayer",
+      "Local Co-Op",
+      "Local Multiplayer",
+      "Online multiplayer",
+      "Multiplayer",
+      "Online Co-Op",
+      "Co-op"
+    ]
+  },
+  {
+    "heading": "Tags",
+    "fhead": "tags",
+    "options": [
+      "Atmospheric",
+      "Open World",
+      "Story Rich",
+      "Sci-fi",
+      "FPS",
+      "2D",
+      "Fantasy",
+      "Difficult",
+      "Comedy",
+      "Survival",
+      "Free to Play",
+      "Third-Person Shooter",
+      "Fast-Paced",
+      "Cinematic",
+      "Competitive",
+      "Driving"
+    ]
+  }
+]
