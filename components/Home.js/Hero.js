@@ -97,7 +97,7 @@ const Hero = ({}) => {
             style={{
               position: 'absolute',
               width: '100%',
-              height: 470,
+              height: 570,
               opacity: translation.interpolate({
                 inputRange: [0, 110],
                 outputRange: [0.25, 0.5],
