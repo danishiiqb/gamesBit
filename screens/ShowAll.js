@@ -7,11 +7,15 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { SafeAreaView } from 'react-native';
 import BackgroundGradient from '../components/BackgroundGradient';
 import Spinner from '../components/Spinner';
+import Filter from '../components/Filter';
+import ModalWrapper from '../components/ModalWrapper';
 const { width, height } = Dimensions.get('window');
 
 const ShowAll = ({ route, navigation }) => {
   const [data, setData] = useState([]);
+  const [modal, setModal] = useState(false);
   const [pageIndex, setPageIndex] = useState(1);
+  const [filteredItem, setFilteredItem] = useState([]);
   const max = useRef(0);
   const {
     params: { rating, consoleGame, heading, startingMonth, endingMonth },
@@ -29,6 +33,28 @@ const ShowAll = ({ route, navigation }) => {
     );
   }
 
+  function openModal(val) {
+    setModal(val);
+  }
+  function filterByItem(filteredList) {
+    let filteredData = data.filter((item, idx) => {
+      let found = false;
+      item[filteredList.fhead].forEach((element) => {
+        filteredList.list.forEach((selectedFilter) => {
+          if (
+            filteredList.fhead === 'platforms'
+              ? element.platform.name
+              : element.name === selectedFilter
+          ) {
+            found = true;
+          }
+        });
+      });
+      return found;
+    });
+    setFilteredItem(filteredData);
+  }
+
   useEffect(() => {
     async function getData() {
       let gamesData = await (
@@ -43,7 +69,6 @@ const ShowAll = ({ route, navigation }) => {
         )
       ).json();
       let allData = gamesData.results;
-
       let totalCount = allData?.length && gamesData.count / allData.length;
       if (totalCount > 20) {
         max.current = 20;
@@ -67,47 +92,65 @@ const ShowAll = ({ route, navigation }) => {
         backgroundColor: '#1A002B',
       }}
     >
+      <ModalWrapper
+        modal={modal}
+        length={filteredItem.length}
+        toggleModal={() => {
+          setModal(false);
+        }}
+        filterByItem={filterByItem}
+      ></ModalWrapper>
+
       <View
         style={{
           flexDirection: 'row',
           position: 'relative',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           zIndex: 90,
           paddingLeft: 13,
           paddingRight: 13,
         }}
       >
-        <Pressable
-          onPress={() => {
-            navigation.goBack();
-          }}
-        >
-          <Icon
-            style={{
-              position: 'relative',
-              top: 11,
-              marginRight: 3,
-            }}
-            name='left'
-            size={18}
-            color='white'
-          ></Icon>
-        </Pressable>
-        <Text
+        <View
           style={{
-            marginBottom: 9,
-            fontFamily: 'font-bold',
-            color: 'white',
-            fontSize: 28,
-            lineHeight: 45,
+            flexDirection: 'row',
           }}
         >
-          {heading}
-        </Text>
+          <Pressable
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <Icon
+              style={{
+                position: 'relative',
+                top: 11,
+                marginRight: 3,
+              }}
+              name='left'
+              size={18}
+              color='white'
+            ></Icon>
+          </Pressable>
+          <Text
+            style={{
+              marginBottom: 9,
+              fontFamily: 'font-bold',
+              color: 'white',
+              fontSize: 28,
+              lineHeight: 45,
+            }}
+          >
+            {heading}
+          </Text>
+        </View>
+        <Filter modVal={modal} openModal={openModal}></Filter>
       </View>
       {data.length > 0 ? (
         <>
           <BackgroundGradient
-            height={500}
+            height={630}
             image={data[4].background_image}
           ></BackgroundGradient>
           <View
@@ -124,9 +167,10 @@ const ShowAll = ({ route, navigation }) => {
                   nativeEvent.contentSize.height - 600
                 ) {
                   if (pageIndex < max.current) {
-                    setPageIndex((prev) => {
-                      return prev + 1;
-                    });
+                    !modal &&
+                      setPageIndex((prev) => {
+                        return prev + 1;
+                      });
                   }
                 }
               }}
@@ -148,7 +192,7 @@ const ShowAll = ({ route, navigation }) => {
                 paddingBottom: 25,
               }}
               numColumns={3}
-              data={data}
+              data={filteredItem.length > 0 ? filteredItem : data}
               renderItem={itemRender}
               keyExtractor={(item, idx) => {
                 return item.id;
